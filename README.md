@@ -1,13 +1,11 @@
-# ISPC - Aplicaciones Moviles
-## Segundo cuatrimestre - 2023
+# ISPC - Práctica Profesionalizante
 
-### Tablero de trabajo: https://github.com/users/AndreaReyna/projects/5
+### Repositorio 2023: https://github.com/AndreaReyna/ISPC-Fullstack
 
-### Wiki: https://github.com/AndreaReyna/ISPC-Fullstack/wiki
+### Tablero de trabajo: https://github.com/orgs/Library-In47/projects/1
 
-### Video funcionamiento: https://drive.google.com/file/d/1KVDOdsH-xjUkfmHCvV0rBP0xhanS91HC/view
+### Wiki: https://github.com/Library-In47/In47/wiki
 
-### Video Demo MVP: https://drive.google.com/file/d/1MiQUBKZ8UA4-vp8h76anWO9RndZcidNS/view?usp=sharing
 
 ### Integrantes
 * 👨‍💻 Juan Manuel Sanchez Fin
@@ -18,4 +16,3 @@
 * 👨‍💻 Franco Serafini
 * 👨‍💻 Diego Guardatti 
 
-___
