@@ -41,6 +41,8 @@ export class AuthService {
     }),
     withCredentials: true
     };
+    localStorage.clear();
+    window.location.reload();
     return this.http.post<any>(`${this.url}/logout/`, null, httpOptions); 
   }
 
