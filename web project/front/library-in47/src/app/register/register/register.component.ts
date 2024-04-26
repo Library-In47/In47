@@ -1,20 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   alertVisible: boolean;
   alertMessage: string;
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router) {
+  user: User = {
+    id: 0,
+    first_name: '',
+    last_name: '',
+    email: '',
+    username: '',
+    password: '',
+    tel: 0,
+    dni: 0,
+    dateBirth: '',
+  };
+
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.alertVisible = false;
     this.alertMessage = '';
   }
@@ -22,17 +39,41 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      lastname: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      lastname: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      username: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      password2: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      check: new FormControl(false, Validators.requiredTrue)
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+      password2: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+      check: new FormControl(false, Validators.requiredTrue),
     });
   }
 
   get name() {
     return this.registerForm.get('name');
+  }
+
+  get tel() {
+    return this.registerForm.get('tel');
+  }
+
+  get dni() {
+    return this.registerForm.get('dni');
+  }
+
+  get dateName() {
+    return this.registerForm.get('dateName');
   }
 
   get lastname() {
@@ -71,12 +112,15 @@ export class RegisterComponent implements OnInit {
       this.email !== null
     ) {
       const user = {
-        id: 6, // por el momento necesitamos setear el id manualmente
+        id: 0, // por el momento necesitamos setear el id manualmente
         first_name: this.name.value!,
         last_name: this.lastname.value!,
         email: this.email.value!,
         username: this.username.value!,
-        password: this.password.value!
+        password: this.password.value!,
+        tel: this.tel?.value!,
+        dateBirth: this.dateName?.value!,
+        dni: this.dni?.value!,
       };
 
       this.userService.create(user).subscribe(
@@ -87,7 +131,9 @@ export class RegisterComponent implements OnInit {
             () => {
               // Login successful
               console.log('Login successful');
-              this.authService.isLoggedIn = true; // Set isLoggedIn to true on successful login
+
+              this.user = user as User;
+              // this.authService.isLoggedIn = true; // Set isLoggedIn to true on successful login
               this.router.navigate(['/']);
             },
             (error) => {
@@ -95,13 +141,13 @@ export class RegisterComponent implements OnInit {
               this.router.navigate(['/home']);
             }
           );
-        
-
         },
         (error) => {
           // Error al crear el usuario
           console.error('Error al crear el usuario:', error);
-          this.showAlert('Error al registrar el usuario. Por favor, intenta nuevamente.');
+          this.showAlert(
+            'Error al registrar el usuario. Por favor, intenta nuevamente.'
+          );
         }
       );
 
