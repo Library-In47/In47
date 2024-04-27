@@ -17,6 +17,7 @@ export class AuthService {
   constructor(private http: HttpClient, private route: Router) {}
 
   private user?: User;
+  private csrfToken: string = '';
 
   // Get user
   getUser(): User | undefined {
@@ -24,23 +25,12 @@ export class AuthService {
 
     return structuredClone(this.user);
   }
-  // Login
+
   login(email: string, password: string): Observable<User> {
-    const body = {
+    const credentials = {
       email: email,
       password: password,
     };
-    return this.http.post<User>(`${this.url}/login/`, body).pipe(
-      tap((user) => (this.user = user as User)),
-      tap((user) => localStorage.setItem('token', user.id.toString()))
-    );
-  }
-
-  // Check user status
-  checkAuth(): Observable<boolean> {
-    if (!localStorage.getItem('token')) return of(false);
-
-    const token = localStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -50,15 +40,44 @@ export class AuthService {
       }),
       withCredentials: true,
     };
+    const csrfToken = this.getCookie('csrftoken');
+    console.log(csrfToken, 'token');
+    localStorage.setItem('csrftoken', csrfToken);
+
+    return this.http
+      .post<User>(`${this.url}/login/`, credentials, httpOptions)
+      .pipe(
+        tap((s) => console.log(s)),
+        tap((user) => (this.user = user as User))
+      );
+  }
+
+  checkAuth(): Observable<boolean> {
+    if (!localStorage.getItem('csrftoken')) return of(false);
+
+    const token = localStorage.getItem('csrftoken');
+
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('X-Requested-With', 'XMLHttpRequest');
+
+    if (token) {
+      headers = headers.set('X-CSRFToken', token);
+    }
+
+    const httpOptions = {
+      headers: headers,
+      withCredentials: true,
+    };
 
     const user = this.http
       .get<User>(`${this.profileUrl}/profile/`, httpOptions)
       .pipe(
         tap((user) => (this.user = user)),
-
         map((user) => !!user),
         catchError((err) => of(false))
       );
+
     console.log(user);
     return user;
   }
@@ -83,18 +102,7 @@ export class AuthService {
         }
       }
     }
+
     return cookieValue;
-  }
-
-  set isLoggedIn(value: boolean) {
-    this._isLoggedIn.next(value);
-  }
-
-  get isLoggedIn(): boolean {
-    return this._isLoggedIn.getValue();
-  }
-
-  getIsLoggedIn(): Observable<boolean> {
-    return this._isLoggedIn.asObservable();
   }
 }
