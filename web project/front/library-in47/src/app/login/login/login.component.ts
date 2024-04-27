@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
@@ -21,7 +21,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
 
@@ -42,13 +45,14 @@ export class LoginComponent implements OnInit {
         () => {
           // Login successful
           console.log('Login successful');
-          this.authService.isLoggedIn = true; // Set isLoggedIn to true on successful login
           this.router.navigate(['/']);
         },
         (error) => {
           // Login failed
           console.error('Login failed:', error);
-          this.showAlert('Error al iniciar sesión. Por favor, verifica tus credenciales.');
+          this.showAlert(
+            'Error al iniciar sesión. Por favor, verifica tus credenciales.'
+          );
         }
       );
     } else {

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap, of, map, catchError } from 'rxjs';
 import { User } from '../models/user';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class AuthService {
     false
   );
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: Router) {}
 
   private user?: User;
 
@@ -67,7 +68,7 @@ export class AuthService {
   logout() {
     this.user = undefined;
     localStorage.clear();
-    window.location.reload();
+    this.route.navigate(['login']);
   }
 
   getCookie(name: string): string {
