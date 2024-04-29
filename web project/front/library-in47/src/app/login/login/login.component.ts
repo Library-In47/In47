@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   alertVisible: boolean;
   alertMessage: string;
+  hide= true; //muestra el ojo del login cerrado
 
   constructor(private authService: AuthService, private router: Router) {
     this.alertVisible = false;

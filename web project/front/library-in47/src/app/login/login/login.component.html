@@ -35,8 +35,13 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-lock fa-fw"></i></span>
               </div>
-              <input type="password" id="password" class="form-control" formControlName="password"
+              <input [type]="hide ? 'password' : 'text'" id="password" class="form-control" formControlName="password"
                 [class.is-invalid]="password?.invalid && (password?.dirty || password?.touched)" />
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <i class="fas" [ngClass]="hide ? 'fa-eye-slash' : 'fa-eye'" (click)="hide = !hide"></i> <!--el input con el ojo para ver contraseña-->
+                </span>
+              </div>
             </div>
             <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="invalid-feedback">
               <span *ngIf="password?.errors?.['required']">La contraseña es requerida.</span>
