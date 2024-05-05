@@ -33,11 +33,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>{{1}}</td>
-          <td>{{"05/05/2024"}}</td>
-          <td>{{"$4000"}}</td>
-          <td>{{"Finalizado"}}</td>
+        <tr *ngFor="let order of orders">
+          <td>{{order?.id_orden}}</td>
+          <td>{{order?.fecha_creacion | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+          <td>${{order?.total}}</td>
+          <td>{{ order?.id_estado === 3 ? 'Finalizado' : 'Pendiente' }}</td>
         </tr>
       </tbody>
     </table>
