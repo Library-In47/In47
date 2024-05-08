@@ -1,0 +1,27 @@
+.btn-success{
+    background-color: #F3AA60 !important;
+    border-color: #D78A3A !important;  
+  }
+
+ .btn-success {
+    /* --mdb-btn-bg: #14a44d; */
+    /* --mdb-btn-color: #fff; */
+    --mdb-btn-box-shadow: 0 4px 9px -4px #B1671C !important;
+    /* --mdb-btn-hover-bg: #139c49; */
+    /* --mdb-btn-hover-color: #fff; */
+    /* --mdb-btn-focus-bg: #139c49; */
+    /* --mdb-btn-focus-color: #fff; */
+    /* --mdb-btn-active-bg: #129445; */
+    /* --mdb-btn-active-color: #fff; */
+}
+.btn-success:hover {
+    /* --mdb-btn-bg: #14a44d; */
+    /* --mdb-btn-color: #fff; */
+    --mdb-btn-box-shadow: 0 4px 9px -4px #B1671C !important;
+    --mdb-btn-hover-bg: #B1671C !important
+    /* --mdb-btn-hover-color: #fff; */
+    
+    /* --mdb-btn-focus-color: #fff; */
+    /* --mdb-btn-active-bg: #129445; */
+    /* --mdb-btn-active-color: #fff; */
+}
