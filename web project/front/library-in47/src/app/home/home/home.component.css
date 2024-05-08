@@ -9,3 +9,9 @@ img{
   .hover-effect:hover {
     transform: scale(1.05); /* Aumenta el tamaño del elemento un 5% al pasar el cursor por encima */
   }
+
+.btn-primary{
+  background-color: #F3AA60 !important;
+  border-color: #D78A3A !important;
+
+}
