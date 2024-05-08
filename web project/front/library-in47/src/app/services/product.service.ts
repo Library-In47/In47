@@ -12,6 +12,10 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
+  search(text:string):Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.url}?search=${text}`);
+  }
+
   getAll():Observable<Product[]>{
     return this.http.get<Product[]>(this.url);
   }
