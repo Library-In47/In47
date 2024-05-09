@@ -28,7 +28,7 @@ import { CartModule } from './cart/cart.module';
 import { CarritoService } from './services/carrito.service';
 import { PagarCompraModule } from './pagar-compra/pagar-compra.module';
 import { UserModule } from './user/user.module';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -59,7 +59,8 @@ import { UserModule } from './user/user.module';
     CartModule,
     HttpClientModule,
     PagarCompraModule,
-    UserModule,
+    UserModule,    
+    FormsModule 
   ],
   providers: [CarritoService],
   bootstrap: [AppComponent]
