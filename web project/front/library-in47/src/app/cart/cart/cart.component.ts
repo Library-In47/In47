@@ -78,7 +78,7 @@ export class CartComponent {
     return parseFloat(precio);
   }
 
-  get logIn() {
+  get logIn(): Observable<boolean> {
     return this.authService.checkAuth();
   }
 
