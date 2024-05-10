@@ -3,6 +3,12 @@
 <article class="container" >
 
    <div class="row justify-content-center" role="group" aria-label="Basic outlined example">
+      <h1 class="container display-3 mt-5 text-danger">      
+         <div *ngIf="libros.length === 0">
+            <p>No se encontraron libros que coincidan con la búsqueda.</p>
+         </div>
+      </h1>
+      <h1>{{test}}</h1>
       <div class="col-sm-6 col-md-4 col-lg-4 col-xl-2 m-2 hover-effect" *ngFor="let libro of libros" [routerLink]="['/libro', libro.id_libro]" style="cursor: pointer;">
         <img [src]="libro.img_url" class="mt-2" alt="portada de libro">
         <div class="pt-0 text-center">
