@@ -3,3 +3,6 @@
   font-size: 2rem; 
   margin-right: 0.5rem; 
 }
+.bg-dark {
+  background-color: #D78A3A !important;
+}
