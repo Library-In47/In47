@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-formulario-pago',
   templateUrl: './formulario-pago.component.html',
-  styleUrls: ['./formulario-pago.component.css']
+  styleUrls: ['./formulario-pago.component.css'],
 })
 export class FormularioPagoComponent implements OnInit {
   formPago!: FormGroup;
@@ -27,16 +27,19 @@ export class FormularioPagoComponent implements OnInit {
     this.formPago = this.formBuilder.group({
       tarjeta: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
       titular: ['', [Validators.required]],
-      vencimiento: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/(20[2-9][0-9])$')]],
+      vencimiento: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^(0[1-9]|1[0-2])/(20[2-9][0-9])$'),
+        ],
+      ],
       code: ['', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
       dni: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-    }); 
-    this.authService.getProfile().subscribe(
-      (user: User) => {
-        this.userEmail = user.email;
-      },
-    )
- }
+    });
+    const user = this.authService.getUser();
+    if (user) this.userEmail = user.email;
+  }
 
   get tarjeta_GET() {
     return this.formPago.get('tarjeta');
@@ -62,15 +65,11 @@ export class FormularioPagoComponent implements OnInit {
     if (this.formPago.valid) {
       const datosPago = {
         email: this.userEmail,
-        ...this.formPago.value
+        ...this.formPago.value,
       };
       this.servPago.enviarDatosPago(datosPago).subscribe(
         (response) => {
-          Swal.fire(
-            'Tu compra se realizó exitosamente!',
-            '',
-            'success'
-          );
+          Swal.fire('Tu compra se realizó exitosamente!', '', 'success');
           this.mostrarMensajeExito = true;
           setTimeout(() => {
             this.mostrarMensajeExito = false;
@@ -83,7 +82,6 @@ export class FormularioPagoComponent implements OnInit {
       );
     }
   }
-
 
   validarNumeros(event: any) {
     const pattern = /^[0-9]*$/;

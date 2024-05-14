@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
 from .serializers import *
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
-
+from rest_framework import filters
 # Create your views here.
 
 class SignupView(generics.CreateAPIView):
@@ -183,6 +183,9 @@ class LibroViewSet(viewsets.ReadOnlyModelViewSet):  #libro solo vista
     permission_classes = [AllowAny]
     queryset = Libro.objects.all()
     serializer_class = LibroSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["titulo", "subtitulo", "resenia"]
+    
 
 class LibroAdmin(viewsets.ModelViewSet):    #libro editable
     permission_classes = [IsAdminUser]
