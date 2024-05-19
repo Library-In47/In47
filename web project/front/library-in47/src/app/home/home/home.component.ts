@@ -13,6 +13,7 @@ import { CategoryService } from 'src/app/services/category.service';
 export class HomeComponent implements OnInit {
   libros!: Product[];
   categories!: Category[];
+  selectedCategory: number | null = null;
   test: string = '';
 
   constructor(
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit {
   }
 
   filterByCategory(categoryId: number): void {
+    this.selectedCategory = categoryId;
     this.productService.getAll().subscribe(libros => {
       this.libros = libros.filter(libro => libro.id_categoria === categoryId);
       if (this.libros.length === 0) {
@@ -48,6 +50,14 @@ export class HomeComponent implements OnInit {
       } else {
         this.test = '';
       }
+    });
+  }
+
+  clearFilters(): void {
+    this.selectedCategory = null;
+    this.productService.getAll().subscribe(libros => {
+      this.libros = libros;
+      this.test = '';
     });
   }
 }
