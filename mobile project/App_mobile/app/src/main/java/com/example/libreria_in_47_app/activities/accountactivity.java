@@ -1,7 +1,9 @@
 package com.example.libreria_in_47_app.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +18,7 @@ import com.example.libreria_in_47_app.models.UserClass;
 public class accountactivity extends AppCompatActivity {
     ImageView ivRegresar;
     Button btnCerrarSesion;
-    Button button, buttonDelete;
+    Button buttonEdit, buttonDelete;
     TextView txtAcouNom, txtAcouApe, txtAcouEmail, txtAcouTelefono, txtAcouTitulo;
 
     UserClass user;
@@ -42,7 +44,7 @@ public class accountactivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        btnCerrarSesion=findViewById(R.id.btnCerrarSesion);
+        btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
         btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,8 +52,8 @@ public class accountactivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonEdit = findViewById(R.id.button);
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(accountactivity.this, EditUserActivity.class);
@@ -59,13 +61,11 @@ public class accountactivity extends AppCompatActivity {
             }
         });
 
-        button = findViewById(R.id.buttonDelete);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonDelete = findViewById(R.id.buttonDelete);
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               dbHelper.deleteUser(user.getIdUser());
-                Intent intent = new Intent(accountactivity.this, LoginActivity.class);
-                startActivity(intent);
+                showConfirmationDialog();
             }
         });
 
@@ -77,6 +77,26 @@ public class accountactivity extends AppCompatActivity {
         txtAcouEmail.setText(user.getEmail());
         txtAcouTelefono.setText(user.getTelefono());
         txtAcouTitulo.setText("Hola " + user.getNombre());
+    }
 
+    private void showConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmación de Eliminación")
+                .setMessage("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.")
+                .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dbHelper.deleteUser(user.getIdUser());
+                        Intent intent = new Intent(accountactivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }
