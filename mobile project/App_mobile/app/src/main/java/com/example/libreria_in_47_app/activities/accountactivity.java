@@ -19,7 +19,7 @@ public class accountactivity extends AppCompatActivity {
     ImageView ivRegresar;
     Button btnCerrarSesion;
     Button buttonEdit, buttonDelete;
-    TextView txtAcouNom, txtAcouApe, txtAcouEmail, txtAcouTelefono, txtAcouTitulo;
+    TextView txtAcouNom, txtAcouApe, txtAcouEmail, txtAcouDni, txtAcouTelefono, txtAcouTitulo;
 
     UserClass user;
 
@@ -29,21 +29,25 @@ public class accountactivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accountactivity);
+
         dbHelper = new DataBaseSQLiteHelper(this);
+
         ivRegresar = findViewById(R.id.ivRegresar);
         txtAcouNom = findViewById(R.id.txtAcouNom);
         txtAcouApe = findViewById(R.id.txtAcouApe);
         txtAcouEmail = findViewById(R.id.txtAcouEmail);
+        txtAcouDni = findViewById(R.id.txtAcouDni);  // Nuevo TextView para DNI
         txtAcouTelefono = findViewById(R.id.txtAcouTelefono);
         txtAcouTitulo = findViewById(R.id.txtAcouTitulo);
 
-        ivRegresar.setOnClickListener (new View.OnClickListener(){
+        ivRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent i = new Intent(accountactivity.this, MainActivity.class);
                 startActivity(i);
             }
         });
+
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
         btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +56,7 @@ public class accountactivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         buttonEdit = findViewById(R.id.button);
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +80,7 @@ public class accountactivity extends AppCompatActivity {
         txtAcouNom.setText(user.getNombre());
         txtAcouApe.setText(user.getApellido());
         txtAcouEmail.setText(user.getEmail());
+        txtAcouDni.setText(user.getDni());  // Establecer el texto del DNI
         txtAcouTelefono.setText(user.getTelefono());
         txtAcouTitulo.setText("Hola " + user.getNombre());
     }
