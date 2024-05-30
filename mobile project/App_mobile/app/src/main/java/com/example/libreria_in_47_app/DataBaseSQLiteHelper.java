@@ -272,30 +272,35 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     }
     public boolean validateUserCredentials(Context context, String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT password FROM cliente WHERE email = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(email)});
+        String query = "SELECT id_usuario, password FROM cliente WHERE email = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+
         if (cursor.moveToFirst()) {
             @SuppressLint("Range")
             String dbPassword = cursor.getString(cursor.getColumnIndex(UserClass.COLUMN_PASSWORD));
-            if(checkPassword(password, dbPassword)){
+
+            if (checkPassword(password, dbPassword)) {
                 int columnIndex = cursor.getColumnIndex("id_usuario");
-                if(columnIndex != -1) {
+                if (columnIndex != -1) {
                     long userId = cursor.getLong(columnIndex);
-                    // Guardar el ID del usuario en Preferencias Compartidas para dsp poder obtenerlo
+
+                    // Guardar el ID del usuario en Preferencias Compartidas para después poder obtenerlo
                     SharedPreferences sharedPreferences = context.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putLong("userId", userId);
                     editor.apply();
+
+                    cursor.close();
+                    return true;
                 } else {
-                    Toast.makeText(context, "Internal error.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Internal error: User ID not found.", Toast.LENGTH_SHORT).show();
                 }
-            };
+            }
         }
+
         cursor.close();
-        return true;
+        return false;
     }
-
-
 
     //Obtener usuario logeado
     public long getLoggedUserId(Context context) {
