@@ -29,6 +29,7 @@ import com.example.libreria_in_47_app.models.EditorialClass;
 import com.example.libreria_in_47_app.models.FormatClass;
 import com.example.libreria_in_47_app.models.LanguageClass;
 
+import org.mindrot.jbcrypt.BCrypt;
 
 
 public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
@@ -264,30 +265,41 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     }
 
     // Login
+
+    // Method to verify password.
+    private boolean checkPassword(String password, String dbPassword) {
+        return BCrypt.checkpw(password, dbPassword);
+    }
     public boolean validateUserCredentials(Context context, String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM cliente WHERE email = ? AND password = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{email, password});
-        if (cursor.getCount() <= 0) {
-            cursor.close();
-            return false;
-        }
-        cursor.moveToFirst();
+        String query = "SELECT id_usuario, password FROM cliente WHERE email = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
 
-        int columnIndex = cursor.getColumnIndex("id_usuario");
-        if(columnIndex != -1) {
-            long userId = cursor.getLong(columnIndex);
-            // Guardar el ID del usuario en Preferencias Compartidas para dsp poder obtenerlo
-            SharedPreferences sharedPreferences = context.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong("userId", userId);
-            editor.apply();
-        } else {
-            Toast.makeText(context, "Internal error.", Toast.LENGTH_SHORT).show();
+        if (cursor.moveToFirst()) {
+            @SuppressLint("Range")
+            String dbPassword = cursor.getString(cursor.getColumnIndex(UserClass.COLUMN_PASSWORD));
+
+            if (checkPassword(password, dbPassword)) {
+                int columnIndex = cursor.getColumnIndex("id_usuario");
+                if (columnIndex != -1) {
+                    long userId = cursor.getLong(columnIndex);
+
+                    // Guardar el ID del usuario en Preferencias Compartidas para después poder obtenerlo
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putLong("userId", userId);
+                    editor.apply();
+
+                    cursor.close();
+                    return true;
+                } else {
+                    Toast.makeText(context, "Internal error: User ID not found.", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
 
         cursor.close();
-        return true;
+        return false;
     }
 
     //Obtener usuario logeado
@@ -664,7 +676,6 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
                 int id = cursor.getInt(cursor.getColumnIndex(LanguageClass.COLUMN_ID));
                 @SuppressLint("Range")
                 String nombre = cursor.getString(cursor.getColumnIndex(LanguageClass.COLUMN_NAME));
-
                 LanguageClass language = new LanguageClass(id, nombre);
 
                 languages.add(language);
