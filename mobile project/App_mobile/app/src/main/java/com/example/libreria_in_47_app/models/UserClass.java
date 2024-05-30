@@ -71,4 +71,11 @@ public class UserClass implements IUser {
 
     public String getFecha_modificacion() { return fecha_modificacion; }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 }
