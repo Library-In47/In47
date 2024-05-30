@@ -514,6 +514,24 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void updateUser(UserClass user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(UserClass.COLUMN_NOMBRE, user.getNombre());
+        values.put(UserClass.COLUMN_APELLIDO, user.getApellido());
+        values.put(UserClass.COLUMN_EMAIL, user.getEmail());
+        values.put(UserClass.COLUMN_DNI, user.getDni());
+        values.put(UserClass.COLUMN_TELEFONO, user.getTelefono());
+
+        // Define la condición para actualizar (por ejemplo, basada en el ID del usuario)
+        String whereClause = UserClass.COLUMN_ID + " = ?";
+        String[] whereArgs = {String.valueOf(user.getIdUser())};
+
+        // Realiza la actualización
+        db.update("cliente", values, whereClause, whereArgs);
+        db.close();
+    }
+
     //Actualizar calificación del libro.
     public void rateBook(int bookId, float userRating) {
         SQLiteDatabase db = this.getWritableDatabase();

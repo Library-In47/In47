@@ -1,17 +1,78 @@
-img{
-    width: 100%;
-    margin-bottom: 20px;
+.section {
+  margin-top: 3vh;
+  margin-bottom: 3vh;
 }
-.hover-effect {
-    transition: transform .2s; /* Animación suave */
-  }
-  
-  .hover-effect:hover {
-    transform: scale(1.05); /* Aumenta el tamaño del elemento un 5% al pasar el cursor por encima */
-  }
 
-.btn-primary{
+.carousel-item {
+  height: 35vh;
+}
+
+img {
+  width: 100%;
+}
+
+.nav-pills {
+  --bs-nav-pills-border-radius: 0.375rem;
+  --bs-nav-pills-link-active-color: #fff;
+  --bs-nav-pills-link-active-bg: #B1671C;
+}
+
+.btn:hover {
+  color: white !important;
+  background-color: #FFC489 !important;
+  border-color: #FFC489 !important;
+}
+
+.btn-outline-primary {
+  border-style: none;
+  color: rgba(0, 0, 0, 0.692);
+  font-family: sans-serif;
+}
+
+img {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.hover-effect {
+  transition: transform 0.2s;
+}
+
+.hover-effect:hover {
+  transform: scale(1.05);
+}
+
+.nav-pills {
+  background-color: #f3aa6071 !important;
+  border-radius: 15px;
+}
+
+.btn-primary {
   background-color: #F3AA60 !important;
   border-color: #D78A3A !important;
+}
 
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.whatsapp-button img {
+  width: 60px;
+  height: 60px;
+}
+
+.clear-filters {
+  background-color: #D78A3A !important;
+  color: white;
+}
+
+.btn.active,
+.btn-outline-primary.active {
+  background-color: #D78A3A !important;
+  color: white !important;
 }
