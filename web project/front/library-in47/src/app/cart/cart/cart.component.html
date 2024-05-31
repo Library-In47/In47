@@ -21,7 +21,7 @@
   </div>
 
   <div *ngIf="elementosCarrito.length > 0">
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered table-background">
       <thead class="thead-dark">
         <tr>
           <th scope="col">Libro</th>
@@ -69,7 +69,7 @@
         </tr>
       </tbody>
     </table>
-    <p>Total: {{ total | number:'1.2-2' }}</p>
+    <p class="total-price">Total: {{ total | number:'1.2-2' }}</p>
 
     <div *ngIf="!logIn" class="text-center mt-3">
       <p>Inicia sesión o regístrate para continuar con la compra.</p>
@@ -78,7 +78,7 @@
     </div>
 
     <div *ngIf="logIn" class="text-center mt-3">
-      <a class="btn btn-success" (click)="finalizarCompra()">Finalizar compra</a>
+      <a class="btn btn-finalizar-compra" (click)="finalizarCompra()">Finalizar compra</a>
     </div>
   </div>
 

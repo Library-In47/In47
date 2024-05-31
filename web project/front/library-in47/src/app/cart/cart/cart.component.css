@@ -1,0 +1,21 @@
+.btn-finalizar-compra {
+    background-color: #D78A3A !important;
+    color: white;
+}
+
+.table-background {
+}
+
+.tb-header-bg{
+    
+    
+}
+
+.total-price{
+    display: inline-block;    
+    text-align: end;
+    font-weight: bold;
+    background-color: #f3aa6071 !important;
+    padding: 8px;
+    border-radius: 5%;
+}
