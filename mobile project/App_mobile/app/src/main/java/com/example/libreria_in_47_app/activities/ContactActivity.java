@@ -50,7 +50,7 @@ public class ContactActivity extends AppCompatActivity {
         visitWebsiteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:4200/"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Library-In47/In47"));
                 startActivity(browserIntent);
             }
         });
