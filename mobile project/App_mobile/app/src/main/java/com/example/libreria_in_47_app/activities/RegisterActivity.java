@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.example.libreria_in_47_app.DataBaseSQLiteHelper;
 import com.example.libreria_in_47_app.R;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class RegisterActivity extends AppCompatActivity {
 
     DataBaseSQLiteHelper dbHelper;
@@ -47,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String firstName = firstNameEditText.getText().toString().trim();
                 String lastName = lastNameEditText.getText().toString().trim();
                 String email = emailEditText.getText().toString().trim();
-                String password = passwordEditText.getText().toString().trim();
+                String password = hashPassword(passwordEditText.getText().toString().trim());
 
                 // Guardado en la base de datos
                 dbHelper.createUser(this, firstName, lastName, password, email);
@@ -59,12 +61,18 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    // Method to encrypt password
+    public static String hashPassword(String plainTextPassword) {
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+    }
+
     private boolean areFieldsValid() {
         String firstName = firstNameEditText.getText().toString().trim();
         String lastName = lastNameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         String repeatPassword = repeatPasswordEditText.getText().toString().trim();
+
 
         if (firstName.length() < 3 || lastName.length() < 3) {
             showToast("El nombre y el apellido deben tener al menos 3 letras.");
