@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity  implements BookAdapter.OnIt
     DataBaseSQLiteHelper dbHelper;
 
     ImageButton mButton;
+    ImageButton wButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,20 @@ public class MainActivity extends AppCompatActivity  implements BookAdapter.OnIt
             @Override
             public void onClick(View view) {
                 showAlertDialog();
+            }
+        });
+
+        // Boton de mensajeria por WhatsApp
+
+        wButton = findViewById(R.id.imageButton);
+
+        wButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://api.whatsapp.com/send?phone=5491122223333&text=Hola!%20Quisiera%20recibir%20ayuda%20por%20favor";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
 
