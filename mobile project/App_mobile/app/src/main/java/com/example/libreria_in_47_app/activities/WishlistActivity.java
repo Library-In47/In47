@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.libreria_in_47_app.DataBaseSQLiteHelper;
 import com.example.libreria_in_47_app.R;
@@ -16,6 +18,7 @@ import java.util.List;
 public class WishlistActivity extends AppCompatActivity implements WishlistAdapter.OnItemClickListener {
 
     DataBaseSQLiteHelper dbHelper;
+    ImageView ivBackW;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,16 @@ public class WishlistActivity extends AppCompatActivity implements WishlistAdapt
 
         // Instanciar un objeto de la clase DataBaseSQLiteHelper.
         dbHelper = new DataBaseSQLiteHelper(this);
+
+        // Configurar el botón de regreso
+        ivBackW = findViewById(R.id.ivBackW);
+        ivBackW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Volver a la actividad anterior
+                finish();
+            }
+        });
 
         // Recuperar id de usuario logueado.
         long userId = dbHelper.getLoggedUserId(this);
@@ -41,8 +54,8 @@ public class WishlistActivity extends AppCompatActivity implements WishlistAdapt
 
         // Navegación.
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
-            bottomNavigationView.setSelectedItemId(R.id.bottom_deseos);
-            bottomNavigationView.setOnItemSelectedListener(item -> {
+        bottomNavigationView.setSelectedItemId(R.id.bottom_deseos);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.bottom_deseos) {
                 return true;
             } else if (item.getItemId() == R.id.bottom_inicio) {
