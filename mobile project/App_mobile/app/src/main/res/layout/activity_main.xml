@@ -40,26 +40,30 @@
             android:layout_height="match_parent">
 
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ico_notification"
                 android:padding="10dp"
-                app:srcCompat="@drawable/ico_notification" />
+                android:visibility="visible"
+                app:srcCompat="@drawable/ico_notification"
+                tools:srcCompat="@drawable/ico_notification"
+                tools:visibility="visible" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="50dp">
+            android:padding="50dp"/>
 
-            <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                app:srcCompat="@drawable/ico_profile" />
-        </androidx.cardview.widget.CardView>
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="59dp"
+            android:layout_weight="1"
+            android:background="@drawable/baseline_whatsapp_24"
+            android:text="Show Alert" />
 
     </LinearLayout>
 

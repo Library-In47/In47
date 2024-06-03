@@ -1,5 +1,7 @@
 package com.example.libreria_in_47_app.activities;
 
+import static com.example.libreria_in_47_app.activities.RegisterActivity.hashPassword;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.libreria_in_47_app.DataBaseSQLiteHelper;
 import com.example.libreria_in_47_app.R;
+
+import org.mindrot.jbcrypt.BCrypt;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -70,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
             showToast("Error, verifique los datos de inicio de sesión y vuelva a intentarlo");
             return false;
         }
-
         return true;
     }
 

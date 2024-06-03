@@ -125,22 +125,11 @@ export class RegisterComponent implements OnInit {
 
       this.userService.create(user).subscribe(
         () => {
-          // Registro exitoso
-          console.log('Registro exitoso');
-          this.authService.login(user.email, user.password).subscribe(
-            () => {
-              // Login successful
-              console.log('Login successful');
-
-              this.user = user as User;
-              // this.authService.isLoggedIn = true; // Set isLoggedIn to true on successful login
-              this.router.navigate(['/']);
-            },
-            (error) => {
-              console.log('Error en el autologin:', error);
-              this.router.navigate(['/home']);
-            }
-          );
+          if (user) {
+            // Registro exitoso
+            console.log('Registro exitoso');
+            this.router.navigate(['/login']);
+          }
         },
         (error) => {
           // Error al crear el usuario

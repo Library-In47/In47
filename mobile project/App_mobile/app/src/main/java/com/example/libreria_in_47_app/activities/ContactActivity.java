@@ -3,6 +3,7 @@ package com.example.libreria_in_47_app.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +17,6 @@ public class ContactActivity extends AppCompatActivity {
 
     ImageView ivRegresar;
     private TextView AboutusTextView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +46,13 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
+        Button visitWebsiteButton = findViewById(R.id.visitWebsiteButton);
+        visitWebsiteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Library-In47/In47"));
+                startActivity(browserIntent);
+            }
+        });
     }
 }

@@ -1,71 +1,98 @@
-
 <app-header></app-header>
-<article class="container" >
 
-   <div class="row justify-content-center" role="group" aria-label="Basic outlined example">
-      <h1 class="container display-3 mt-5 text-danger">      
-         <div *ngIf="libros.length === 0">
-            <p>No se encontraron libros que coincidan con la búsqueda.</p>
-         </div>
-      </h1>
-      <h1>{{test}}</h1>
-      <div class="col-sm-6 col-md-4 col-lg-4 col-xl-2 m-2 hover-effect" *ngFor="let libro of libros" [routerLink]="['/libro', libro.id_libro]" style="cursor: pointer;">
-        <img [src]="libro.img_url" class="mt-2" alt="portada de libro">
-        <div class="pt-0 text-center">
-          <h6>{{libro.titulo}}</h6>
-        </div>
+<article class="container">
+  <!-- Botones de categorías -->
+  <nav class="container nav nav-pills flex-column flex-sm-row mt-3">
+    <button *ngFor="let category of categories" 
+            class="btn btn-outline-primary flex-sm-fill m-2" 
+            [class.active]="selectedCategory === category.id_categoria" 
+            (click)="filterByCategory(category.id_categoria)">
+      {{ category.nombre.toUpperCase() }}
+    </button>
+    <button class="btn btn-outline-primary clear-filters flex-sm-fill m-2" 
+            (click)="clearFilters()">
+      BORRAR FILTROS
+    </button>
+  </nav>
+
+  <!-- Botón de borrar filtros -->
+  <div class="container text-center mt-3">
+  </div>
+
+  <!-- Mensaje de no encontrado -->
+  <div class="row justify-content-center" role="group" aria-label="Basic outlined example">
+    <h1 class="container display-3 mt-5 text-danger">
+      <div *ngIf="libros.length === 0">
+        <p>No se encontraron libros que coincidan con la búsqueda.</p>
+      </div>
+    </h1>
+  </div>
+
+  <!-- Lista de libros -->
+  <div class="row justify-content-center" role="group" aria-label="Basic outlined example">
+    <h1>{{test}}</h1>
+    <div class="col-sm-6 col-md-4 col-lg-4 col-xl-2 m-2 hover-effect" 
+         *ngFor="let libro of libros" 
+         [routerLink]="['/libro', libro.id_libro]" 
+         style="cursor: pointer;">
+      <img [src]="libro.img_url" class="mt-2" alt="portada de libro">
+      <div class="pt-0 text-center">
+        <h6>{{libro.titulo}}</h6>
       </div>
     </div>
-    
+  </div>
 </article>
+
 <hr class="container">
+
 <article class="container">
-   <div class="card-group row g-1" role="group" aria-label="Basic outlined example">
-      <div class="card">
-         <div class="card-header">
-            <img src="../../../assets/img/infantil_portada.png" class="card-img-top " alt="portada de libro infantil">
-         </div>
-         <div class="card-body">
-            <h5 class="card-title">CUENTOS INFANTILES</h5>
-            <p class="card-text">
-               En esta seccion encontraras los libros mas recomendados para
-               niños/as de entre 3-12años.
-            </p>
-            <a href="view/infantiles.html" class="btn btn-primary">EXPLORAR</a>
-         </div>
+  <div class="card-group row g-1" role="group" aria-label="Basic outlined example">
+    <div class="card">
+      <div class="card-header">
+        <img src="../../../assets/img/filosofia.jpg" class="card-img-top" alt="portada de filosofia">
       </div>
-      <div class="card">
-         <img src="../../../assets/img/novela_portada.png" class="card-img-top" alt="portada de novela">
-         <div class="card-body">
-            <h5 class="card-title">NOVELAS</h5>
-            <p class="card-text">
-               En esta seccion encontraras las novelas mas emocionantes y
-               apasionadas para disfrutar.
-            </p>
-            <a href="view/novelas.html" class="btn btn-primary">EXPLORAR</a>
-         </div>
+      <div class="card-body">
+        <h5 class="card-title">FILOSOFÍA</h5>
+        <p class="card-text">
+          En esta sección encontrarás los libros más recomendados sobre filosofía.
+        </p>
+        <button (click)="filterByCategory(8)" class="btn btn-primary">EXPLORAR</button>
       </div>
-      <div class="card">
-         <img src="../../../assets/img/comic_portada.png" class="card-img-top" alt="portada de comic">
-         <div class="card-body">
-            <h5 class="card-title">COMICS</h5>
-            <p class="card-text">
-               En esta seccion encontraras los comics que te haran viajar a otra
-               realidad y luchar junto a tus personajes favoritos.
-            </p>
-            <a href="view/comics.html" class="btn btn-primary">EXPLORAR</a>
-         </div>
+    </div>
+    <div class="card">
+      <img src="../../../assets/img/novela_portada.png" class="card-img-top" alt="portada de novela">
+      <div class="card-body">
+        <h5 class="card-title">NOVELAS</h5>
+        <p class="card-text">
+          En esta sección encontrarás las novelas más emocionantes y apasionadas para disfrutar.
+        </p>
+        <button (click)="filterByCategory(1)" class="btn btn-primary">EXPLORAR</button>
       </div>
-      <div class="card">
-         <img src="../../../assets/img/mas_vendidos_portada.png" class="card-img-top" alt="portada de libro mas vendido">
-         <div class="card-body">
-            <h5 class="card-title">MAS VENDIDOS</h5>
-            <p class="card-text">
-               En esta seccion encontraras los libros mas vendidos y recomendados por la
-               gente. Conocelos!
-            </p>
-            <a href="view/masvendidos.html" class="btn btn-primary">EXPLORAR</a>
-         </div>
+    </div>
+    <div class="card">
+      <img src="../../../assets/img/comic_portada.png" class="card-img-top" alt="portada de aventura">
+      <div class="card-body">
+        <h5 class="card-title">AVENTURA</h5>
+        <p class="card-text">
+          En esta sección encontrarás los libros de aventura que te harán viajar a otra realidad y luchar junto a tus personajes favoritos.
+        </p>
+        <button (click)="filterByCategory(5)" class="btn btn-primary">EXPLORAR</button>
       </div>
-   </div>
+    </div>
+    <div class="card">
+      <img src="../../../assets/img/mas_vendidos_portada.png" class="card-img-top" alt="portada de libros auto-ayuda">
+      <div class="card-body">
+        <h5 class="card-title">AUTO-AYUDA</h5>
+        <p class="card-text">
+          En esta sección encontrarás libros que te ayudarán con tu vida cotidiana y tus problemas recomendados por la gente.
+        </p>
+        <button (click)="filterByCategory(4)" class="btn btn-primary">EXPLORAR</button>
+      </div>
+    </div>
+  </div>
 </article>
+
+<!-- Botón de WhatsApp -->
+<a href="https://wa.me/1234567890" target="_blank" class="whatsapp-button">
+  <img src="../../../assets/img/whatsapp.png" alt="WhatsApp">
+</a>
